@@ -400,10 +400,13 @@ class Orders extends Admin_Controller
 
 				
 				<div>
-					<span style="font-weight: bold">' . $company_info['address'] . '	</span> 
+					<span style="font-weight: bold">ĐC: </span><span>' . $company_info['address'] . '	</span> 
+				</div>
+				<div>
+					<span style="font-weight: bold">SĐT: </span><span>' . $company_info['phone'] . '	</span> 
 				</div>
 				<div style="margin-top: 10px">
-					ĐT : <b>' . $company_info['phone'] . '</b><br>
+					
 					Họ tên khách hàng: <b>' . $order_data['customer_name'] . '</b> <br>
 					Số điện thoại: <b>' . $order_data['customer_phone'] . '</b><br>
 					Địa chỉ: ' . $order_data['customer_address'] . ' 
