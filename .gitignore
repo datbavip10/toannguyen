@@ -25,9 +25,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
-
-application/config/config.php
-application/config/database.php
 /vendor/
 
 ### CodeIgniter Patch ###
