@@ -99,10 +99,10 @@
                             <?php endforeach ?>
                           </select>
                         </td>
-                        <td><input type="number" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
+                        <td><input type="text" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
                         <td>
                           <!-- <input type="text" name="rate[]" id="rate_1" class="form-control" disabled autocomplete="off"> -->
-                          <input type="number" name="rate_value[]" id="rate_value_1" class="form-control" onkeyup="getTotal(1)" autocomplete="off">
+                          <input type="text" name="rate_value[]" id="rate_value_1" class="form-control" onkeyup="getTotal(1)" autocomplete="off">
                         </td>
                         <td>
                           <input type="text" name="amount[]" id="amount_1" class="form-control" disabled autocomplete="off">
@@ -219,8 +219,8 @@
                         
                       html += '</select>'+
                     '</td>'+ 
-                    '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
-                    '<td><input type="number" name="rate_value[]" id="rate_value_'+row_id+'" onkeyup="getTotal('+row_id+')" class="form-control"></td>'+
+                    '<td><input type="text" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
+                    '<td><input type="text" name="rate_value[]" id="rate_value_'+row_id+'" onkeyup="getTotal('+row_id+')" class="form-control"></td>'+
                     '<td><input type="text" name="amount[]" id="amount_'+row_id+'" class="form-control" disabled><input type="hidden" name="amount_value[]" id="amount_value_'+row_id+'" class="form-control"></td>'+
                     '<td><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-close"></i></button></td>'+
                     '</tr>';

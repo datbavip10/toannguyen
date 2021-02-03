@@ -229,6 +229,62 @@ class Orders extends Admin_Controller
 	}
 
 	/*
+	* If the validation is not valid, then it redirects to the create page.
+	* If the validation for each input field is valid then it inserts the data into the database 
+	* and it stores the operation message into the session flashdata and display on the manage group page
+	*/
+	public function subbill($id)
+	{
+		if (!in_array('updateOrder', $this->permission)) {
+			redirect('dashboard', 'refresh');
+		}
+
+		if (!$id) {
+			redirect('dashboard', 'refresh');
+		}
+
+		$this->data['page_title'] = 'Cập nhật đơn hàng';
+
+		$this->form_validation->set_rules('product[]', 'Tên sản phẩm', 'trim|required');
+
+
+		if ($this->form_validation->run() == TRUE) {
+
+			$order_id = $this->model_orders->createSubBill($id);
+
+			if ($order_id) {
+				$this->session->set_flashdata('success', 'Successfully created');
+				redirect('orders/update/' . $order_id, 'refresh');
+			} else {
+				$this->session->set_flashdata('errors', 'Error occurred!!');
+				redirect('orders/sub_create/', 'refresh');
+			}
+		}  else {
+			// false case
+			$company = $this->model_company->getCompanyData(1);
+			$this->data['company_data'] = $company;
+			$this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
+			$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
+
+			$result = array();
+			$orders_data = $this->model_orders->getOrdersData($id);
+
+			$result['order'] = $orders_data;
+			$orders_item = $this->model_orders->getOrdersItemData($orders_data['id']);
+
+			foreach ($orders_item as $k => $v) {
+				$result['order_item'][] = $v;
+			}
+
+			$this->data['order_data'] = $result;
+
+			$this->data['products'] = $this->model_products->getActiveProductData();
+
+			$this->render_template('orders/sub_create', $this->data);
+		}
+	}
+
+	/*
 	* It gets the product id passed from the ajax method.
 	* It checks retrieves the particular product data from the product id 
 	* and return the data into the json format.
@@ -263,7 +319,7 @@ class Orders extends Admin_Controller
 		if (!in_array('updateOrder', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
-
+		$sub_orders = $this->model_orders->getOrdersByParentId($id);
 		if (!$id) {
 			redirect('dashboard', 'refresh');
 		}
@@ -290,8 +346,8 @@ class Orders extends Admin_Controller
 			$this->data['company_data'] = $company;
 			$this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
 			$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
-
-			$result = array();
+			$this->data['sub_orders'] = $sub_orders;
+ 			$result = array();
 			$orders_data = $this->model_orders->getOrdersData($id);
 
 			$result['order'] = $orders_data;
