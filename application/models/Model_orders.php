@@ -16,7 +16,7 @@ class Model_orders extends CI_Model
 			return $query->row_array();
 		}
 
-		$sql = "SELECT * FROM orders ORDER BY id DESC";
+		$sql = "SELECT * FROM orders WHERE parent_bill = 0 ORDER BY id DESC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -26,7 +26,6 @@ class Model_orders extends CI_Model
 	{
 		$sql = "SELECT * FROM orders WHERE parent_bill = ?";
 		$query = $this->db->query($sql, array($id));
-			return $query->row_array();
 
 		return $query->result_array();
 	}
@@ -97,8 +96,12 @@ class Model_orders extends CI_Model
 
 	public function createSubBill($parent_bill)
 	{
+		$parent_info = $this->getOrdersData($parent_bill);
+		$total = $this->getOrdersByParentId($parent_bill);
+		$total = count($total)+1;
+
 		$user_id = $this->session->userdata('id');
-		$bill_no = 'BILPR-'.strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
+		$bill_no = $parent_info['bill_no'].'-'.$total;
     	$data = array(
     		'bill_no' => $bill_no,
     		'customer_name' => $this->input->post('customer_name'),

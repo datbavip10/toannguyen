@@ -145,7 +145,7 @@
                   <div class="form-group">
                     <label for="discount" class="col-sm-5 control-label">Giảm giá</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount" onkeyup="subAmount()" autocomplete="off">
+                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Nhập vào số tiền" onkeyup="subAmount()" autocomplete="off">
                     </div>
                   </div>
                   <div class="form-group">

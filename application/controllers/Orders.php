@@ -179,7 +179,7 @@ class Orders extends Admin_Controller
 				$value['customer_phone'],
 				$date_time,
 				$count_total_item,
-				$value['net_amount'],
+				number_format($value['net_amount'], 0, ',', '.'),
 				$paid_status,
 				$buttons
 			);

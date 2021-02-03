@@ -167,7 +167,7 @@
                 <div class="form-group">
                   <label for="discount" class="col-sm-5 control-label">Giảm giá</label>
                   <div class="col-sm-7">
-                    <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount" onkeyup="subAmount()" value="<?php echo $order_data['order']['discount'] ?>" autocomplete="off">
+                    <input type="text" class="form-control" id="discount" name="discount" placeholder="Nhập vào số tiền" onkeyup="subAmount()" value="<?php echo $order_data['order']['discount'] ?>" autocomplete="off">
                   </div>
                 </div>
                 <div class="form-group">
@@ -220,6 +220,8 @@
   </section>
   <section class="content">
     <!-- Small boxes (Stat box) -->
+    <?php if ($sub_orders) : ?>
+
     <div class="row">
       <div class="col-md-12 col-xs-12">
         <div class="box">
@@ -230,8 +232,14 @@
           </div>
           <div class="box-body">
             <ul>
+            <?php
+              if (!$sub_orders){
+                $sub_orders = [];
+                echo "Chưa có hóa đơn con";
+              } 
+            ?>  
               <?php foreach ($sub_orders as $key => $val) : ?>
-                <a href=""><li>Hóa đơn #<?php echo $key+1; ?> ngày <?php echo date('d-m-Y | h:m:s', $val['date_time']);  ?></li> </a>
+                <a href="<?php echo base_url('orders/update/'.$val['id']) ?>"><li>Hóa đơn #<?php echo $key+1; ?> ngày <?php echo date('d-m-Y | h:m:s', $val['date_time']);  ?> | <?php echo $val['paid_status'] == 1 ? "<span class='label label-success'>Đã thanh toán</span>" : "<span class='label label-warning'>Chưa thanh toán</span>" ?></li> </a>
               <?php endforeach; ?>
             </ul>
 
@@ -240,6 +248,7 @@
         </div>
       </div>
     </div>
+    <?php endif; ?>
   </section>
   <!-- /.content -->
 </div>
